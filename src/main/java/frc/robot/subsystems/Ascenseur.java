@@ -42,7 +42,7 @@ public class Ascenseur extends SubsystemBase {
   private double conversionVortex;
 
   // Encodeur
-  private Encoder encoder = new Encoder(2, 3);
+  private Encoder encoder = new Encoder(2, 3,true);
 
    // capteur
   private final DigitalInput limitSwitchGauche = new DigitalInput(0);
@@ -67,21 +67,21 @@ public class Ascenseur extends SubsystemBase {
               // characterized.
               log -> {
                 // Record a frame for the shooter motor.
-                log.motor("Ascenseur Vortex")
-                    .voltage(
-                        voltageApplique.mut_replace(
-                            moteur1.get() * RobotController.getBatteryVoltage(), Volts))
-                    .linearPosition(hauteur.mut_replace(getPositionVortex(), Meters))
-                    .linearVelocity(
-                        vitesseLineaire.mut_replace(getVitesseVortex(), MetersPerSecond));
+                // log.motor("Ascenseur Vortex")
+                //     .voltage(
+                //         voltageApplique.mut_replace(
+                //             moteur1.get() * RobotController.getBatteryVoltage(), Volts))
+                //     .linearPosition(hauteur.mut_replace(getPositionVortex(), Meters))
+                //     .linearVelocity(
+                //         vitesseLineaire.mut_replace(getVitesseVortex(), MetersPerSecond));
 
-                /*log.motor("Ascenseur Externe")
+                log.motor("Ascenseur Externe")
                     .voltage(
                         voltageApplique.mut_replace(
-                            moteur1.get() * RobotController.getBatteryVoltage(), Volts))
+                            moteur1.getAppliedOutput(), Volts))
                     .linearPosition(hauteur.mut_replace(getPositionExterne(), Meters))
                     .linearVelocity(
-                        vitesseLineaire.mut_replace(getVitesseExterne(), MetersPerSecond));*/
+                        vitesseLineaire.mut_replace(getVitesseExterne(), MetersPerSecond));
               },
               // Tell SysId to make generated commands require this subsystem, suffix test state in
               // WPILog with this subsystem's name ("shooter")
@@ -104,21 +104,15 @@ public class Ascenseur extends SubsystemBase {
     moteur2.configure(moteurConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
     ///////À revoir quand ça va marcher dans l'autre code !
-    encoder.setDistancePerPulse((Math.PI * 70.0 / 1000.0) / 360); 
+    encoder.setDistancePerPulse(0.0422/100); 
   }
 
   @Override
   public void periodic() {
-    SmartDashboard.putNumber("Vitesse Vortex", getVitesseVortex());
-    SmartDashboard.putNumber("Hauteur Vortex", getPositionVortex());
 
     SmartDashboard.putNumber("Vitesse Externe", getVitesseExterne()); 
     SmartDashboard.putNumber("Hauteur Externe", getPositionExterne());
    
-
-    if (isLimitSwitch()) {
-      resetEncoders();
-    }
 
   }
 
@@ -139,11 +133,7 @@ public class Ascenseur extends SubsystemBase {
     return moteur1.getEncoder().getPosition();
   }
 
-  // reset les encodeurs des vortex
-  public void resetEncodersVortex() {
-    moteur1.getEncoder().setPosition(0);
-    moteur2.getEncoder().setPosition(0);
-  }
+  
 
   public double getVitesseVortex() {
     return moteur1.getEncoder().getVelocity();
@@ -160,15 +150,7 @@ public class Ascenseur extends SubsystemBase {
     return encoder.getRate();
   }
 
-  public void resetEncodeurExterne() {
-    encoder.reset();
-  }
-
-  public void resetEncoders() {
-    resetEncodersVortex();
-    resetEncodeurExterne();
-  }
-
+ 
 
     //////////////////// Limit switch
 

@@ -57,7 +57,7 @@ public class Poignet extends SubsystemBase {
                 log.motor("Poignet")
                     .voltage(
                         voltageApplique.mut_replace(
-                            moteur.get() * RobotController.getBatteryVoltage(), Volts))
+                            moteur.getAppliedOutput(), Volts))
                     .angularPosition(angle.mut_replace(getAngle(), Rotations))
                     .angularVelocity(
                         vitesseAngulaire.mut_replace(getVitesse(), RotationsPerSecond));
