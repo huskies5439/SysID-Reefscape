@@ -26,7 +26,6 @@ import edu.wpi.first.units.measure.MutVoltage;
 import edu.wpi.first.units.measure.Voltage;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -59,7 +58,7 @@ public class Ascenseur extends SubsystemBase {
   private final SysIdRoutine sysIdRoutine =
       new SysIdRoutine(
           // Empty config defaults to 1 volt/second ramp rate and 7 volt step voltage.
-          new SysIdRoutine.Config(Volts.of(0.5).per(Second), Volts.of(3), Seconds.of(10)),
+          new SysIdRoutine.Config(Volts.of(0.25).per(Second), Volts.of(2), Seconds.of(10)),
           new SysIdRoutine.Mechanism(
               // Tell SysId how to plumb the driving voltage to the motor(s).
               voltage -> setVoltage(voltage),//Il faut changer la méthode "setVoltage" pour qu'elle prenne des Volts
@@ -78,7 +77,7 @@ public class Ascenseur extends SubsystemBase {
                 log.motor("Ascenseur Externe")
                     .voltage(
                         voltageApplique.mut_replace(
-                            moteur1.getAppliedOutput(), Volts))
+                            moteur1.getBusVoltage(), Volts))
                     .linearPosition(hauteur.mut_replace(getPositionExterne(), Meters))
                     .linearVelocity(
                         vitesseLineaire.mut_replace(getVitesseExterne(), MetersPerSecond));
