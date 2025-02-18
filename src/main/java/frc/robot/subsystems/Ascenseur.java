@@ -77,7 +77,7 @@ public class Ascenseur extends SubsystemBase {
                 log.motor("Ascenseur Externe")
                     .voltage(
                         voltageApplique.mut_replace(
-                            moteur1.getBusVoltage(), Volts))
+                            moteur1.getBusVoltage() * moteur1.getAppliedOutput(), Volts))
                     .linearPosition(hauteur.mut_replace(getPositionExterne(), Meters))
                     .linearVelocity(
                         vitesseLineaire.mut_replace(getVitesseExterne(), MetersPerSecond));
