@@ -58,7 +58,7 @@ public class Ascenseur extends SubsystemBase {
   private final SysIdRoutine sysIdRoutine =
       new SysIdRoutine(
           // Empty config defaults to 1 volt/second ramp rate and 7 volt step voltage.
-          new SysIdRoutine.Config(Volts.of(0.25).per(Second), Volts.of(2), Seconds.of(10)),
+          new SysIdRoutine.Config(Volts.of(0.5).per(Second), Volts.of(4), Seconds.of(10)),
           new SysIdRoutine.Mechanism(
               // Tell SysId how to plumb the driving voltage to the motor(s).
               voltage -> setVoltage(voltage),//Il faut changer la méthode "setVoltage" pour qu'elle prenne des Volts
@@ -74,7 +74,7 @@ public class Ascenseur extends SubsystemBase {
                 //     .linearVelocity(
                 //         vitesseLineaire.mut_replace(getVitesseVortex(), MetersPerSecond));
 
-                log.motor("Ascenseur Externe")
+                log.motor("Ascenseur")
                     .voltage(
                         voltageApplique.mut_replace(
                             moteur1.getBusVoltage() * moteur1.getAppliedOutput(), Volts))
@@ -103,7 +103,7 @@ public class Ascenseur extends SubsystemBase {
     moteur2.configure(moteurConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
     ///////À revoir quand ça va marcher dans l'autre code !
-    encoder.setDistancePerPulse(0.0422/100); 
+    encoder.setDistancePerPulse(0.07*Math.PI / 360.0); 
   }
 
   @Override
