@@ -18,6 +18,7 @@ public class RobotContainer {
   
   // private final Poignet poignet = new Poignet();
   private final Ascenseur ascenseur = new Ascenseur();
+  private final Poignet poignet = new Poignet();
 
   private final SendableChooser<Command> chooser = new SendableChooser<>();
 
@@ -43,10 +44,14 @@ public class RobotContainer {
 
   private void configureBindings() {
     //Stai vraiment bien comme ca
-    manette.a().whileTrue(ascenseur.sysIdQuasistatic(Direction.kForward));
-    manette.b().whileTrue(ascenseur.sysIdQuasistatic(Direction.kReverse));
-    manette.x().whileTrue(ascenseur.sysIdDynamic(Direction.kForward));
-    manette.y().whileTrue(ascenseur.sysIdDynamic(Direction.kReverse));
+    // manette.a().whileTrue(ascenseur.sysIdQuasistatic(Direction.kForward));
+    // manette.b().whileTrue(ascenseur.sysIdQuasistatic(Direction.kReverse));
+    // manette.x().whileTrue(ascenseur.sysIdDynamic(Direction.kForward));
+    // manette.y().whileTrue(ascenseur.sysIdDynamic(Direction.kReverse));
+    manette.a().whileTrue(poignet.sysIdQuasistatic(Direction.kForward));
+    manette.b().whileTrue(poignet.sysIdQuasistatic(Direction.kReverse));
+    manette.x().whileTrue(poignet.sysIdDynamic(Direction.kForward));
+    manette.y().whileTrue(poignet.sysIdDynamic(Direction.kReverse));
 
   }
 
